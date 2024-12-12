@@ -1,10 +1,14 @@
-import { useState, useRef } from 'react';
+import { useState, useRef ,useContext} from 'react';
+import AuthContext from "../../store/auth-context"
 
 import classes from './AuthForm.module.css';
 
 const AuthForm = () => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+
+  const authCtx =useContext(AuthContext);
+
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -33,7 +37,7 @@ const AuthForm = () => {
         body: JSON.stringify({
           email: enteredEmail,
           password: enteredPassword,
-          returnSecureToken: true,
+          returnSecureToken: false,
         }),
         headers: {
           'Content-Type': 'application/json'
@@ -44,13 +48,13 @@ const AuthForm = () => {
       if (res.ok) {
         return res.json();
       } else {
-        res.json().then((data) => {
+       return res.json().then((data) => {
           const errorMessage = 'Authentication error';
           throw new Error(errorMessage);
         })
       }
     }).then((data) => {
-      console.log(data);
+      authCtx.login(data.idToken);
     }).catch((error) => {
       alert(error.message);
     })
@@ -76,7 +80,7 @@ const AuthForm = () => {
         </div>
 
         <div className={classes.actions}>
-          {!isLoading && <button className={classes.actions} >{isLogin ? 'Login' : 'Create Acount'}</button>}
+          {!isLoading && <button type='submit' className={classes.actions} >{isLogin ? 'Login' : 'Create Acount'}</button>}
           {isLoading && <p>Sending request...</p>}
         </div>
 
