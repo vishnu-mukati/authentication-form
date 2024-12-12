@@ -1,7 +1,10 @@
 import { useContext } from 'react';
+import { Route } from 'react-router-dom';
+import AuthForm from '../Auth/AuthForm';
 import { Link } from 'react-router-dom';
 import AuthContext from "../../store/auth-context"
 import classes from './MainNavigation.module.css';
+import HomePage from '../../pages/HomePage';
 
 const MainNavigation = () => {
 
@@ -11,6 +14,9 @@ const MainNavigation = () => {
 
   const logOutHandler = () =>{
     authCtx.logout();
+    <Route path="/">
+        <HomePage/>
+      </Route>
   }
 
   return (
