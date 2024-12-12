@@ -1,5 +1,6 @@
 import React,{useState} from "react";
-
+import { Route } from "react-router-dom";
+import Auth from "../pages/AuthPage";
 const AuthContext = React.createContext({
     token: '',
     isLoggedIn: false,
@@ -18,6 +19,9 @@ export const AuthContextProvider = (props) => {
 
     const logoutHandler = () => {
         setToken(null);
+      <Route path="/auth">
+        <Auth/>
+      </Route>
        
     }
 
