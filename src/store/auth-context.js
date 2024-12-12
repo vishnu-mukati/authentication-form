@@ -1,11 +1,11 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Route } from "react-router-dom";
 import Auth from "../pages/AuthPage";
 const AuthContext = React.createContext({
     token: '',
     isLoggedIn: false,
-    login: (token) => {},
-    logout: () => {},
+    login: (token) => { },
+    logout: () => { },
 })
 
 export const AuthContextProvider = (props) => {
@@ -13,15 +13,26 @@ export const AuthContextProvider = (props) => {
     const [token, setToken] = useState(initialToken);
     const userIsLoggedIn = !!token;
 
-    const loginHandler = (token) => {
-        setToken(token);
-        localStorage.setItem('token',token);
-    }
 
     const logoutHandler = () => {
         setToken(null);
-      localStorage.removeItem('token');
-       
+        localStorage.removeItem('token');
+        console.log('settimeout is called')
+    }
+    const loginHandler = (token) => {
+        setToken(token);
+        localStorage.setItem('token', token);
+
+
+
+        // setTimeout(
+        //     logoutHandler, 5000
+        // )
+        setTimeout(() => {
+            console.log('set timeout is called');
+            localStorage.removeItem('token');
+        }, 5000);
+
     }
 
     const ContextValue = {
